@@ -123,3 +123,6 @@ config.py
 
 # json files
 *.json
+
+# final deck image
+new_deck.png
