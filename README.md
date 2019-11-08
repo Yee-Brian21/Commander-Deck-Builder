@@ -38,3 +38,34 @@ The topics were originally just numbered 0 to 4. I created those names myself ba
 I didn't have any user-data so I would only do a content-based recommendation system. If the person getting a recommendation was a complete beginner, they would be asked to pick any number of the 5 pre-generated topics. I would then create the 'perfect' commander for them that would have evenly distributed scores amongst the topics they chose. Using the topic scores that my LDA model generated, I would recommend cards based on shortest euclidean distance to this 'perfect' commander. I also used each card's popularity ranking from EDHrec.com to weigh its distance; the more popular a card was, the less their distance would be increased.
 
 If the person has played magic before and wanted a new commander to play with, they would instead enter a legendary creature that they enjoyed and that card's topic scores would be used instead of creating a 'perfect' commander.
+
+## Building a Deck
+After we have chosen a commander to build our deck around, we can start building the deck. I wanted to build a well-rounded deck that could handle many situations, instead of a one-dimensional deck that can only do a single thing well.
+
+The approach I took was to build the deck one card at a time, choosing the next card based on how well it fit with the deck's current theme. This was again done by creating topics with LDA for the entire card pool. This time I wanted to be more specific with the topics so I created 15 different topics to categorize the cards into.
+
+I also set aside room for lands and staple cards that fit the commander's color identity. These will not be included into the deck until the very end because I did not want them to affect the deck's overall topic score when building the deck.
+
+After setting aside room for the lands and staple cards, the rest of the deck will be built one card at a time. Starting with only the chosen commander, I calculate the deck's average topic score to use as the center of the deck. Then I find the euclidean distance between this center and every card still in the card pool. This distance is then weighted by its EDHrec ranking, the current mana curve of the deck, the current number of draw effects the deck currently has, and the number of creature cards the deck currently has. Each deck should have a certain number of draw effects and a certain number of creature cards, so the cards that the deck currently lacks will have its distance slightly depending on how many cards of that type the deck still needs.
+
+Here are the statistics for two decks that the builder generated:
+
+**Niv-Mizzet Reborn Deck**
+
+![niv-mizzet-reborn](/Images/Niv-Mizzet-Reborn.png)
+
+**Kozilek, the Great Distortion Deck**
+
+![kozilek](/Images/Kozilek-Great-Distortion.png)
+
+## Showing the Deck
+I also want to be able to show the generated deck to the person right away. The Scryfall API includes high resolution images of each card that I can stitch together and plot using matplotlib's subplots. However, storing 18,000+ high resolution images on my own machine would be a huge waste of space. Instead, I opted to make live API calls when creating the deck image to **save storage space at the expense of run time**. The deck can still be generated in under a minute with less than decent internet connection, so the amount of time sacrificed is well worth the space saved.
+
+## Conclusions
+This was meant to be a way to introduce people to the Commander format in MTG. This is by no means the best possible deck but is a good starting point to play around and experiment with. Most of the fun comes in playing your deck against other people's decks and seeing what cool interactions occur when there are 4-6 people playing at once.
+
+## Improvements and Next Steps
+* Make API calls to TcgPlayer for card prices. Hope to use price as a feature so that different decks can be built for different budgets.
+* Change the popularity ranking from edhrec from binary `true` or `false` to a percentage representing the number of user submitted decks the card appears in.
+* Adjust stopwords, parameters for topic model, and weights for scores.
+* Create a front end using Flask or Streamlit.
