@@ -52,17 +52,23 @@ Here are the statistics for two decks that the builder generated:
 
 **Niv-Mizzet Reborn Deck**
 
+<p align="center"><img src="Images/nmr-card.jpg" width="25%" height="25%"></p>
+
 ![niv-mizzet-reborn](/Images/Niv-Mizzet-Reborn.png)
 
 **Kozilek, the Great Distortion Deck**
 
+<p align="center"><img src="Images/kgd-card.jpg" width="25%" height="25%"></p>
+
 ![kozilek](/Images/Kozilek-Great-Distortion.png)
+
+Both decks have a mana curve centered around 3 which is to improve the deck's consistency, allowing a card to be played at every stage of the game. Each deck also has a good amount of creatures, the correct number of mana generation in the form of lands and artifacts, and enough removal and draw options.
 
 ## Showing the Deck
 I also want to be able to show the generated deck to the person right away. The Scryfall API includes high resolution images of each card that I can stitch together and plot using matplotlib's subplots. However, storing 18,000+ high resolution images on my own machine would be a huge waste of space. Instead, I opted to make live API calls when creating the deck image to **save storage space at the expense of run time**. The deck can still be generated in under a minute with less than decent internet connection, so the amount of time sacrificed is well worth the space saved.
 
 ## Conclusions
-This was meant to be a way to introduce people to the Commander format in MTG. This is by no means the best possible deck but is a good starting point to play around and experiment with. Most of the fun comes in playing your deck against other people's decks and seeing what cool interactions occur when there are 4-6 people playing at once.
+This was meant to be a way to introduce people to the Commander format in MTG. It is difficult to determine what makes a deck better than another since that requires actually play-testing the decks. These decks are also generated in a vaccuum, so some cards might perform better or worse depending on what the other people in the game are playing. This is by no means the best possible deck but is a good starting point to play around and experiment with.
 
 ## Improvements and Next Steps
 * Make API calls to TcgPlayer for card prices. Hope to use price as a feature so that different decks can be built for different budgets.
